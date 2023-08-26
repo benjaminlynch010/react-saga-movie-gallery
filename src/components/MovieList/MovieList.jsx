@@ -30,12 +30,12 @@ function MovieList() {
   const movies = useSelector((store) => store.movies);
   
   useEffect(() => {
+    console.log('<MovieList> Dispatch : FETCH_MOVIES')
     dispatch({ type: "FETCH_MOVIES" });
   }, []);
 
   const handleClick = (id) => {
-    console.log(`Movie : ${id}`)
-    dispatch({ type: `FETCH_MOVIE_${id}` })
+    // TODO : Need a route back to main list on card
     history.push(`/detail/${id}`)
   }
 
@@ -67,12 +67,10 @@ function MovieList() {
               color="text.primary"
               gutterBottom
             >
-              Album layout
+              Another Stupid Project
             </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              Something short and leading about the collection below—its contents,
-              the creator, etc. Make it short and sweet, but not too short so folks
-              don&apos;t simply skip over it entirely.
+              This is dumb and nothing works.  Who picked these trash movies?
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -80,7 +78,6 @@ function MovieList() {
               spacing={2}
               justifyContent="center"
             >
-
             </Stack>
           </Container>
         </Box>
