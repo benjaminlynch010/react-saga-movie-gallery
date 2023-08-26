@@ -1,4 +1,5 @@
--- CREATE DATABASE "saga_movies_weekend"
+-- CREATE DATABASE "saga_movies_weekend" 
+-- ✅ DB created & tested
 
 
 CREATE TABLE "movies" (
