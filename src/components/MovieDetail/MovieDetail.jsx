@@ -7,25 +7,68 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from 'react-router-dom'
 
 // MUI
-import Typography from '@mui/material/Typography';
+import AppBar from '@mui/material/AppBar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActions from "@mui/material/CardActions";
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
 
+import Container from '@mui/material/Container'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography';
+import HomeIcon from '@mui/icons-material/Home'
 
 function MovieDetail() {
+  const history = useHistory()
   const dispatch = useDispatch()
   const params = useParams()
 
+  const movie = useSelector((store) => store.singleMovie[0])
+
   useEffect(() => {
     console.log(`MovieDetail : ${params.id}`)
-    dispatch({ type: 'FETCH_DETAILS', payload: params.id })
+    dispatch({ type: 'FETCH_DETAILS', payload: params.id }) // payload: params.id ???
   }, [])
+
+  const handleClick = () => {
+    history.push('/')
+  }
+
 
 
   return (
     <div>
-      <Typography variant="h4">Movie Details</Typography>
+      <AppBar position="relative">
+        <Toolbar>
+          <HomeIcon sx={{ mr: 2 }} />
+          <Typography variant="h6" color="inherit" noWrap>
+            My Movie List
+          </Typography>
+        </Toolbar>
+      </AppBar>
 
+      <Container sx={{ py: 8 }} maxWidth="xs">
+      <Card key={movie}
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {movie.title}
+                    </Typography>
+                    <Typography>
+                      {movie.description}
+                      {movie.genre}  
+                    </Typography>
+                  </CardContent>
+
+
+                </Card>
+            <Button onClick={handleClick} variant="contained">Back</Button>
+        </Container>
     </div>
-    )
+  );
   // TODO : setup Redux dispatch
 
   // Display individual movie details **including ALL genres** 

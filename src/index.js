@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 // Import Roboto font for MUI
 import '@fontsource/roboto/300.css';
@@ -19,6 +19,16 @@ import '@fontsource/roboto/700.css';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    yield takeLatest('FETCH_DETAILS', fetchSingleMovie)
+}
+
+function* fetchSingleMovie(action) {
+  try {
+    const response = yield axios.get(`/api/genre/${action.payload}`)
+    yield put({ type: 'SET_SINGLE_MOVIE', payload: response.data })
+  } catch (error) {
+    console.log("Can't get single movie")
+  }
 }
 
 function* fetchAllMovies() {
@@ -37,6 +47,14 @@ function* fetchAllMovies() {
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
+const singleMovie = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_SINGLE_MOVIE':
+      return [...action.payload]
+    default: 
+      return state
+  }
+}
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {
@@ -60,6 +78,7 @@ const genres = (state = [], action) => {
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
+        singleMovie,
         movies,
         genres,
     }),
