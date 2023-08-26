@@ -4,15 +4,22 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 
 // MUI
 import Typography from '@mui/material/Typography';
 
 
 function MovieDetail() {
+  const dispatch = useDispatch()
+  const params = useParams()
 
-  
+  useEffect(() => {
+    console.log(`MovieDetail : ${params.id}`)
+    dispatch({ type: 'FETCH_DETAILS', payload: params.id })
+  }, [])
+
+
   return (
     <div>
       <Typography variant="h4">Movie Details</Typography>

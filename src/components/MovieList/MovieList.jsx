@@ -30,12 +30,12 @@ function MovieList() {
   const movies = useSelector((store) => store.movies);
   
   useEffect(() => {
+    console.log('<MovieList> Dispatch : FETCH_MOVIES')
     dispatch({ type: "FETCH_MOVIES" });
   }, []);
 
   const handleClick = (id) => {
-    console.log(`Movie : ${id}`)
-    dispatch({ type: `FETCH_MOVIE_${id}` })
+    // TODO : Need a route back to main list on card
     history.push(`/detail/${id}`)
   }
 
