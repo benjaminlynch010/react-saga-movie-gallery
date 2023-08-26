@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from 'react-router-dom'
 import Copyright from "../Copyright/Copyright";
 
 // MUI Imports
@@ -24,12 +25,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
 function MovieList() {
+  const history = useHistory()
   const dispatch = useDispatch();
   const movies = useSelector((store) => store.movies);
   
   useEffect(() => {
     dispatch({ type: "FETCH_MOVIES" });
   }, []);
+
+  const handleClick = (id) => {
+    console.log(`Movie : ${id}`)
+    dispatch({ type: `FETCH_MOVIE_${id}` })
+    history.push(`/detail/${id}`)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -80,7 +88,7 @@ function MovieList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {movies.map((movie) => (
-              <Grid item key={movie.id} xs={12} sm={6} md={4}>
+              <Grid key={movie.id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -98,8 +106,8 @@ function MovieList() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">Details</Button>
-                    <Button size="small">Edit</Button>
+                    {/* TODO: Route to Movie Details */}
+                    <Button onClick={() => handleClick(movie.id)}>Details</Button>
                   </CardActions>
                 </Card>
               </Grid>
