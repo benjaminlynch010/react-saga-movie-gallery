@@ -10,11 +10,6 @@ function MovieDetails() {
     // DB = 'saga_movies_weekend
     // table = 'movies'
     // values = id, title, poster, description, **(genres later)
-  <Paper>
-    <Card>
-      <Typography></Typography>
-    </Card>
-  </Paper>
 
 
   
