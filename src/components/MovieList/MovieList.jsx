@@ -67,21 +67,11 @@ function MovieList() {
               color="text.primary"
               gutterBottom
             >
-              Another Stupid Project
+              Movie Gallery
             </Typography>
-            <Typography variant="h5" align="center" color="text.secondary" paragraph>
-              This is dumb and nothing works.  Who picked these trash movies?
-            </Typography>
-            <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-            </Stack>
           </Container>
         </Box>
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 2 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
             {movies.map((movie) => (

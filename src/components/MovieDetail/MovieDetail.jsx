@@ -6,6 +6,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import { CardHeader } from "@mui/material";
 import CardMedia from '@mui/material/CardMedia';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
@@ -33,33 +34,24 @@ function MovieDetail() {
 
 return (
   <Container>
-  <Grid container spacing={2}>
-    <Grid xs={8}>
-      <Card xs={4} sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography variant="h5">{movie.title}</Typography>
-        <Typography>Genre : {genre.genres}</Typography>
-      </Card>
-      <Paper sx={{ display: "flex", flexDirection: "row" }}>
-        <Card xs={4} sx={{ display: "flex" }}>
-          <CardMedia
-            component="div"
-            sx={{
-              height: "100%",
-              width: "100%",
-              m: "1%",
-            }}
-            image={movie.poster}
-            alt={movie.title}
-            />
-          <CardContent>
-            <Typography>{movie.description}</Typography>
-          </CardContent>
-            <Button onClick={handleClick}>Back To List</Button>
-        </Card>
-      </Paper>
-    </Grid>
-  </Grid>
-</Container>
+    <Card xs={4} sx={{ display: "flex", flexDirection: "column" }}>
+      <CardHeader component={Typography} title={movie.title} subheader={genre.genres}/>
+      <CardContent xs={4} sx={{ display: "flex", flexDirection: "row" }}>
+        <CardMedia
+          component="img"
+          sx={{
+            height: "150",
+            title: movie.title,
+            margin: "20px"
+          }}
+          image={movie.poster}
+          alt={movie.title}
+        />
+        <Typography>{movie.description}</Typography>
+      </CardContent>
+      <Button onClick={handleClick}>Back To List</Button>
+    </Card>
+  </Container>
 );
 
 }
