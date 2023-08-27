@@ -14,6 +14,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+// MUI Theme
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+const defaultTheme = createTheme();
 
 
 // Create the rootSaga generator function
@@ -85,7 +88,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Provider store={storeInstance}>
+          <ThemeProvider theme={defaultTheme}>
             <App />
+          </ThemeProvider>
         </Provider>
     </React.StrictMode>
 );
