@@ -19,24 +19,24 @@ import '@fontsource/roboto/700.css';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    yield takeLatest('FETCH_DETAILS', fetchSingleMovie)
+    yield takeEvery('FETCH_DETAILS', fetchAllGenres)
 }
 
-function* fetchSingleMovie(action) {
+function* fetchAllGenres() {
   try {
-    const response = yield axios.get(`/api/genre/${action.payload}`)
-    yield put({ type: 'SET_SINGLE_MOVIE', payload: response.data })
+    const response = yield axios.get('/api/genre/')
+    yield put({ type: 'SET_GENRES', payload: response.data })
   } catch (error) {
-    console.log("Can't get single movie")
+    console.log("Can't get genres")
   }
 }
 
 function* fetchAllMovies() {
     // get all movies from the DB
     try {
-        const movies = yield axios.get('/api/movie');
-        console.log('get all:', movies.data);
-        yield put({ type: 'SET_MOVIES', payload: movies.data });
+        const response = yield axios.get('/api/movie');
+        console.log('get all:', response.data);
+        yield put({ type: 'SET_MOVIES', payload: response.data });
 
     } catch {
         console.log('get all error');
@@ -47,14 +47,7 @@ function* fetchAllMovies() {
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
-const singleMovie = (state = [], action) => {
-  switch (action.type) {
-    case 'SET_SINGLE_MOVIE':
-      return [...action.payload]
-    default: 
-      return state
-  }
-}
+
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {
@@ -78,7 +71,6 @@ const genres = (state = [], action) => {
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
-        singleMovie,
         movies,
         genres,
     }),
