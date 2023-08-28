@@ -80,3 +80,12 @@ VALUES
 (12,6), (12,3),           -- Social Net
 (13,6), (13,10), (13,1),  -- Titanic
 (14,1), (14,2), (14,4);   -- Toy Story
+
+
+-- Server SQL Query
+-- SELECT movies.id, movies.title, STRING_AGG(genres.name, ', ') AS genres
+-- FROM "movies"
+-- JOIN movies_genres ON movies.id=movies_genres.movie_id
+-- JOIN genres ON movies_genres.genre_id=genres.id
+-- GROUP BY movies.id, movies.title
+-- ORDER BY movies.id ASC

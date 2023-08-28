@@ -6,7 +6,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { CardHeader } from "@mui/material";
+import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
