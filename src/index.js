@@ -1,96 +1,102 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/App/App.js';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./components/App/App.js";
+import { createStore, combineReducers, applyMiddleware } from "redux";
 // Provider allows us to use redux within our react app
-import { Provider } from 'react-redux';
-import logger from 'redux-logger';
+import { Provider } from "react-redux";
+import logger from "redux-logger";
 // Import saga middleware
-import createSagaMiddleware from 'redux-saga';
-import { takeEvery, put, takeLatest } from 'redux-saga/effects';
-import axios from 'axios';
+import createSagaMiddleware from "redux-saga";
+import { takeEvery, put, takeLatest } from "redux-saga/effects";
+import axios from "axios";
 // Import Roboto font for MUI
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
-// MUI Theme
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-const defaultTheme = createTheme();
-
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+// MUI Theme wrapped around App in the root
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { CssBaseline } from "@mui/material";
+const defaultTheme = createTheme({
+  palette: {
+    mode: "dark",
+    primary: {
+     main: "#ff0266",
+    }  
+  },
+});
 
 // Create the rootSaga generator function
 function* rootSaga() {
-    yield takeEvery('FETCH_MOVIES', fetchAllMovies);
-    yield takeEvery('FETCH_DETAILS', fetchAllGenres)
+  yield takeEvery("FETCH_MOVIES", fetchAllMovies);
+  yield takeEvery("FETCH_DETAILS", fetchAllGenres);
 }
 
+// get all genres from DB
 function* fetchAllGenres() {
   try {
-    const response = yield axios.get('/api/genre/')
-    yield put({ type: 'SET_GENRES', payload: response.data })
+    const response = yield axios.get("/api/genre/");
+    yield put({ type: "SET_GENRES", payload: response.data });
   } catch (error) {
-    console.log("Can't get genres")
+    console.log("Can't get genres");
   }
 }
 
 function* fetchAllMovies() {
-    // get all movies from the DB
-    try {
-        const response = yield axios.get('/api/movie');
-        console.log('get all:', response.data);
-        yield put({ type: 'SET_MOVIES', payload: response.data });
-
-    } catch {
-        console.log('get all error');
-    }
-        
+  // get all movies from the DB
+  try {
+    const response = yield axios.get("/api/movie");
+    console.log("get all:", response.data);
+    yield put({ type: "SET_MOVIES", payload: response.data });
+  } catch {
+    console.log("get all error");
+  }
 }
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
-
 // Used to store movies returned from the server
 const movies = (state = [], action) => {
-    switch (action.type) {
-        case 'SET_MOVIES':
-            return action.payload;
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case "SET_MOVIES":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 // Used to store the movie genres
 const genres = (state = [], action) => {
-    switch (action.type) {
-        case 'SET_GENRES':
-            return action.payload;
-        default:
-            return state;
-    }
-}
+  switch (action.type) {
+    case "SET_GENRES":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 // Create one store that all components can use
 const storeInstance = createStore(
-    combineReducers({
-        movies,
-        genres,
-    }),
-    // Add sagaMiddleware to our store
-    applyMiddleware(sagaMiddleware, logger),
+  combineReducers({
+    movies,
+    genres,
+  }),
+  // Add sagaMiddleware to our store
+  applyMiddleware(sagaMiddleware, logger)
 );
 
 // Pass rootSaga into our sagaMiddleware
 sagaMiddleware.run(rootSaga);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <React.StrictMode>
-        <Provider store={storeInstance}>
-          <ThemeProvider theme={defaultTheme}>
-            <App />
-          </ThemeProvider>
-        </Provider>
-    </React.StrictMode>
+  <React.StrictMode>
+    <Provider store={storeInstance}>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <App />
+      </ThemeProvider>
+    </Provider>
+  </React.StrictMode>
 );
