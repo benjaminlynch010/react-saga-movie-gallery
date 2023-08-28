@@ -1,14 +1,16 @@
-# Project Name
-
-
+# Weekend Movie Saga
 
 ## Description
+> Full version @ <!-- Heroku Link Placeholder -->
 
-Your project description goes here. What problem did you solve? How did you solve it?
+Added functionality to a Movie Gallery App
+  - Built new Movie Detail Component
+  - Added React routing
+  - Refactored server requests using Sagas
+  - Wrote new SQL queries to access Genre data
+  - Added Material UI styling to the app
 
 >Duration : 3 Day Sprint
-
-Check Out the Deployment Here : < Heroku Link Placeholder >
 
 ## Prerequisites
   Node.js
@@ -23,18 +25,9 @@ Check Out the Deployment Here : < Heroku Link Placeholder >
 5. Run `npm run client` in your terminal
 
 Usage : 
-- Added features to an existing Movie App with React-Redux and Redux-Sagas
-- Refactored SQL database
-- Added a detailed view for each individual movie, including all genres associated with that movie.
-- displays all of the movies in the movie database. 
-- show all details **including ALL genres** for the selected movie, including title, description, and the image, too! 
-<!-- Something with routing  -->
-- The details page should have a `Back to List` button, which should bring the user to the Home/List Page
 
 <!-- Add to this -->
 Built with React, Javascript
 Styled using MaterialUI
 
 If you have suggestions or issues, please email me at actuallyDont@gmail.com
-
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
